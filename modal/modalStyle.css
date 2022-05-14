@@ -1,0 +1,83 @@
+.modalWrap{
+    display: none;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin: -250px 0 0 -250px;
+    background: #fff;;
+    z-index: 2;
+    border-radius: 20px
+}
+
+.blackBg{
+    display: none;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0, 0,0, 0.5);
+    top:0;
+    left: 0;
+    z-index: 1;
+}
+
+.modalClose{
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: -30px;
+    right: 0;
+}
+
+.modalClose> a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+    text-indent: -9999px;
+}
+
+.inform {
+    font-size: large;
+    font-family: 'LeferiPoint-WhiteObliqueA';
+    font-weight: bold;
+    position: absolute;
+    top: 70%;
+    transform: translateY(-70%);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+}
+
+.modalImage {
+    position: absolute;
+    top: 5%;
+    transform: translateY(-5%);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 300px; 
+    border-radius: 5%;
+    overflow: hidden;
+}
+
+.link {
+    font-size: large;
+    font-family: 'LeferiPoint-WhiteObliqueA';
+    font-weight: bold;
+    position: absolute;
+    top: 90%;
+    transform: translateY(-90%);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@font-face {
+    font-family: 'LeferiPoint-WhiteObliqueA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
