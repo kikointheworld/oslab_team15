@@ -1,50 +1,96 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="./style.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./index.css" />
+
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <title>Weather Coordinator</title>
-</head>
-<body>
+  </head>
+
+  <body>
+    <!-- 사실상 title 헤더 부분 -->
     <div class="title">
-
+      <div class="titleDiv">
+        <div class="titleLine"></div>
+        <p class="titleText">What to wear? 오늘 뭐 입지?</p>
+        <p class="titleDesc">
+          Recommended service for fashion coordination according to temperature
+        </p>
+      </div>
     </div>
+
     <div class="weather">
-        <div class="current">
-            <div class="currentWeather">
-                <img class="currentWeatherImage">
-                <p class="currentWeatherText">기온 : 도</p>
-            </div>
-            <div class="particulate">
-                <img class="particulateImage">
-                <p class="particulateText">미세먼지 : </p>
-            </div>
+      <div class="current">
+        <div class="currentWeather">
+          <i
+            class="bi bi-cloud-fill currentWeatherImage"
+            style="font-size: 200px"
+          ></i>
+          <p class="currentWeatherText">기온 : 도</p>
         </div>
+        <div class="particulate">
+          <i
+            class="bi bi-emoji-smile particulateImage"
+            style="font-size: 200px"
+          ></i>
+          <p class="particulateText">미세먼지 :</p>
+        </div>
+      </div>
+      <div class="hourlyDiv">
         <div class="hourly">
-            <table>
-
-            </table>
-        </div>    
+          시간별 기온 나오는 곳
+          <table></table>
+        </div>
+      </div>
     </div>
-    <button class="coordinateButton" onclick="location.href='./coordinate.html'">코디 추천</button>
+    <div class="buttonDiv">
+      <button
+        type="button"
+        class="coordinateButton btn-10"
+        onclick="location.href='./coordinate.html'"
+      >
+        CLICK ME
+      </button>
+    </div>
     <script>
-        //keys of current and hourly. can be modify.
-        const currentKeys = ['temp_c', 'feelslike_c', 'condition', 'air_quality'];
-        const hourlyKeys = ['time', 'temp_c', 'feelslike_c', 'condition', 'chance_of_rain'];
+      //keys of current and hourly. can be modify.
+      const currentKeys = ["temp_c", "feelslike_c", "condition", "air_quality"];
+      const hourlyKeys = [
+        "time",
+        "temp_c",
+        "feelslike_c",
+        "condition",
+        "chance_of_rain",
+      ];
 
-        //object with current weather info.
-        let current = {};
-/* basic structure of current
+      //object with current weather info.
+      let current = {};
+      /* basic structure of current
     current = {
         temp_c : int, temperature in celsius
         feelslike_c : int, temperature we feels like in celsius
@@ -64,10 +110,10 @@
         }
     }
 */
-        //list that contains hourly.
-        //it contains 48 hourly, from today's 00:00 to tomorrow 23:00 by hour
-        let hourlyList = [];
-/*  basic structure of hourly.
+      //list that contains hourly.
+      //it contains 48 hourly, from today's 00:00 to tomorrow 23:00 by hour
+      let hourlyList = [];
+      /*  basic structure of hourly.
     hourly = {
         time : string, "yyyy-mm-dd hh:00"
         temp_c : int, temperature in celsius
@@ -79,87 +125,84 @@
         }
         chance_of_rain : float, 0 ~ 1
     }
-*/         
-        //add callback function which is called when location is changed. 
-        if(navigator.geolocation)
-        {
-            navigator.geolocation.watchPosition(pos => {
-                getWeatherInfo(pos.coords.latitude + ',' + pos.coords.longitude);
-            },
-            err => {
-                console.log(err);
-                getWeatherInfo('Seoul');
+*/
+      //add callback function which is called when location is changed.
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(
+          (pos) => {
+            getWeatherInfo(pos.coords.latitude + "," + pos.coords.longitude);
+          },
+          (err) => {
+            console.log(err);
+            getWeatherInfo("Seoul");
+          }
+        );
+      }
+      // get weather of seoul when location is not detected.
+      else getWeatherInfo("Seoul");
+
+      //update current and hourlyList with weather api
+      function getWeatherInfo(q) {
+        let url = "http://api.weatherapi.com/v1";
+        const type = "forecast";
+        const key = "99c358fd2f104901838154458220905";
+        const days = "2";
+        const aqi = "yes";
+        const alerts = "no";
+        const lang = "ko";
+
+        url += "/" + type + ".json";
+        url += "?key=" + key;
+        url += "&q=" + q;
+        url += "&days=" + days;
+        url += "&aqi=" + aqi;
+        url += "&alerts=" + alerts;
+        url += "&lang=" + lang;
+
+        axios
+          .get(url)
+          .then((res) => {
+            let currentRaw = res.data.current;
+            let forecastdays = res.data.forecast.forecastday;
+
+            getCurrent(currentRaw);
+            forecastdays.forEach((forecastday) => {
+              forecastday.hour.forEach((hourlyRaw) => {
+                getHourly(hourlyRaw);
+              });
             });
-        }
-        // get weather of seoul when location is not detected.
-        else getWeatherInfo('Seoul');
 
-        //update current and hourlyList with weather api
-        function getWeatherInfo(q)
-        {
-            let url = 'http://api.weatherapi.com/v1';
-            const type = 'forecast';
-            const key = '99c358fd2f104901838154458220905';
-            const days = '2';
-            const aqi = 'yes';
-            const alerts = 'no';
-            const lang = 'ko';
-
-            url += '/' + type + '.json';
-            url += '?key=' + key;
-            url += '&q=' + q;
-            url += '&days=' + days;
-            url += '&aqi=' + aqi;
-            url += '&alerts=' + alerts;
-            url += '&lang=' + lang;
-
-            axios.get(url)
-                .then(res => {
-                    let currentRaw = res.data.current;
-                    let forecastdays = res.data.forecast.forecastday;
-                    
-                    getCurrent(currentRaw);
-                    forecastdays.forEach(forecastday => {
-                        forecastday.hour.forEach(hourlyRaw => {
-                            getHourly(hourlyRaw);
-                        });
-                    });
-
-                    // fill here with updating weather info
-                    //document.querySelector(".currentWeatherImage")
-                    document.querySelector(".currentWeatherText").textContent = '기온 : ' + current.temp_c;
-                    //document.querySelector(".particulateImage")
-                    document.querySelector(".particulateText").textContent = '미세먼지 : ' + current.air_quality['us-epa-index'];
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-
-        
+            // fill here with updating weather info
+            //document.querySelector(".currentWeatherImage")
+            document.querySelector(".currentWeatherText").textContent =
+              "기온 : " + current.temp_c;
+            //document.querySelector(".particulateImage")
+            document.querySelector(".particulateText").textContent =
+              "미세먼지 : " + current.air_quality["us-epa-index"];
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     </script>
     <script>
-        //simply taking info we need from raw data.
-        function getCurrent(currentRaw)
-        {
-            currentKeys.forEach(key => {
-                if(typeof(currentRaw[key]) == 'object')
-                    current[key] = Object.assign(currentRaw[key]);
-                else
-                    current[key] = currentRaw[key];
-            });
-        }
-        function getHourly(hourlyRaw)
-        {
-            let hourlyTmp = {};
-            hourlyKeys.forEach(key => {
-                if(typeof(hourlyRaw[key]) == 'object')
-                    hourlyTmp[key] = Object.assign(hourlyRaw[key]);
-                else
-                    hourlyTmp[key] = hourlyRaw[key];
-            });
-            hourlyList.push(hourlyTmp);
-        }
+      //simply taking info we need from raw data.
+      function getCurrent(currentRaw) {
+        currentKeys.forEach((key) => {
+          if (typeof currentRaw[key] == "object")
+            current[key] = Object.assign(currentRaw[key]);
+          else current[key] = currentRaw[key];
+        });
+      }
+      function getHourly(hourlyRaw) {
+        let hourlyTmp = {};
+        hourlyKeys.forEach((key) => {
+          if (typeof hourlyRaw[key] == "object")
+            hourlyTmp[key] = Object.assign(hourlyRaw[key]);
+          else hourlyTmp[key] = hourlyRaw[key];
+        });
+        hourlyList.push(hourlyTmp);
+      }
     </script>
-</body>
+  </body>
 </html>
