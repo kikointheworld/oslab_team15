@@ -1,0 +1,13 @@
+/* variable
+*/
+:root {
+  --blue: #4b6587;
+  --beige: hsl(48deg 100% 89%);
+  --grey: #c8c6c6;
+  --white: #f7f6f2;
+  --purple: hsl(277deg 42% 59%);
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
+}
