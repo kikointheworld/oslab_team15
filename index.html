@@ -149,7 +149,6 @@
         const days = "2";
         const aqi = "yes";
         const alerts = "no";
-        const lang = "ko";
 
         url += "/" + type + ".json";
         url += "?key=" + key;
@@ -157,7 +156,6 @@
         url += "&days=" + days;
         url += "&aqi=" + aqi;
         url += "&alerts=" + alerts;
-        url += "&lang=" + lang;
 
         axios
           .get(url)
@@ -179,6 +177,9 @@
             //document.querySelector(".particulateImage")
             document.querySelector(".particulateText").textContent =
               "미세먼지 : " + current.air_quality["us-epa-index"];
+
+            document.querySelector(".coordinateButton").onclick =
+              () => location.href=`./coordinate.html?${current.temp_c}/${current.condition.text}`;
           })
           .catch((error) => {
             console.error(error);

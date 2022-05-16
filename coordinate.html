@@ -38,8 +38,8 @@
           class="genderInput"
           name="gender"
           type="radio"
-          value="male"
-          id="maleRadio"
+          value="M"
+          id="manRadio"
           checked="true"
         />
         남
@@ -49,13 +49,62 @@
           class="genderInput"
           name="gender"
           type="radio"
-          value="female"
-          id="femaleRadio"
+          value="W"
+          id="womanRadio"
         />
         여
       </label>
-      <button class="genderSelectButton">확인</button>
+      <button class="genderSelectButton" onclick="getFasion()">확인</button>
     </div>
-    <div class="fashion"></div>
+    <div class="fashionDiv">
+      <img class = "col-sm" src="./modal/1.jpg">
+      <img class = "col-sm" src="./modal/1.jpg">
+
+    </div>
   </body>
+  <script>
+    let temp_c = 20;
+    let condition = "sunny";
+    let gender = "W";
+
+    let fasionList = [];
+    let fasion = {
+      imgSrc : "",
+      page : "", // page to more info
+      comment : "",
+    }
+
+    function getFashion()
+    {
+      //get checked value in radios
+      gender = document.querySelector("input[name='gender']:checked").value;
+
+      //get temperature and condition from previous page.
+      tmp = location.href.split("?");
+      if(tmp.length > 1)
+      {
+        let data = tmp[1].split("/");
+        temp_c = Number(data[0]).toFixed();
+        condition = data[1];
+      }
+
+      //Todo : iterate src directory with gender, temp_c, condition and get FasionList
+
+      //Todo : create img tags with Fasion.imgSrc and add listener setModalVisible()
+      //also, set img id to index, 1 to 4
+
+      //Todo : put img tag to fasionDiv with fasion.imgSrc
+    }
+
+    //onclickListener for img tags in fasionDiv
+    function setModalVisible(id)
+    {
+      //Todo : get Fasion in FasionList with img id
+
+      //Todo : set modal img src, a href, inform to fasion's info
+
+      //Todo : set modal visible
+    }
+
+  </script>
 </html>
