@@ -178,8 +178,8 @@
             document.querySelector(".particulateText").textContent =
               "미세먼지 : " + current.air_quality["us-epa-index"];
 
-            document.querySelector(".coordinateButton").onclick =
-              () => location.href=`./coordinate.html?${current.temp_c}/${current.condition.text}`;
+            document.querySelector(".coordinateButton").onclick = () =>
+              (location.href = `./coordinate.html?${current.temp_c}/${current.condition.text}`);
           })
           .catch((error) => {
             console.error(error);

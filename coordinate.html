@@ -16,8 +16,13 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
     />
+    <!-- 로컬 CSS  -->
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./coordinate.css" />
+    <link rel="stylesheet" href="modalStyle.css" />
+
+    <!-- 로컬 JS -->
+    <script type="text/javascript" src="modal.js"></script>
 
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,6 +37,16 @@
     <title>Weather Coordinator</title>
   </head>
   <body>
+    <!-- 사실상 title 헤더 부분 -->
+    <div class="title">
+      <div class="titleDiv">
+        <div class="titleLine"></div>
+        <p class="titleText">코디 추천</p>
+        <p class="titleDesc">
+          대충설명 대충설명대충설명대충설명 대충설명 대충설명
+        </p>
+      </div>
+    </div>
     <div class="genderSelect">
       <label>
         <input
@@ -57,54 +72,133 @@
       <button class="genderSelectButton" onclick="getFasion()">확인</button>
     </div>
     <div class="fashionDiv">
-      <img class = "col-sm" src="./modal/1.jpg">
-      <img class = "col-sm" src="./modal/1.jpg">
-
+      <div class="fassionRow">
+        <button type="button" id="modalBtn1">
+          <img src="1.jpg" height="500" />
+        </button>
+        <div class="blackBg"></div>
+        <div class="modalWrap">
+          <div class="modalClose"><a href="#">close</a></div>
+          <div class="modalImage">
+            <img class="cloth" src="1.jpg" height="300" />
+          </div>
+          <div class="inform">
+            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
+            패딩을 걸쳐 완성한 캐주얼 룩
+          </div>
+          <div class="link">
+            <a
+              href="https://store.musinsa.com/app/styles/views/24525"
+              target="_blank"
+              >더 알아보기</a
+            >
+          </div>
+        </div>
+        <button type="button" id="modalBtn2">
+          <img src="1.jpg" height="500" />
+        </button>
+        <div class="blackBg"></div>
+        <div class="modalWrap">
+          <div class="modalClose"><a href="#">close</a></div>
+          <div class="modalImage">
+            <img class="cloth" src="1.jpg" height="300" />
+          </div>
+          <div class="inform">
+            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
+            패딩을 걸쳐 완성한 캐주얼 룩
+          </div>
+          <div class="link">
+            <a
+              href="https://store.musinsa.com/app/styles/views/24525"
+              target="_blank"
+              >더 알아보기</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="fassionRow">
+        <button type="button" id="modalBtn3">
+          <img src="1.jpg" height="500" />
+        </button>
+        <div class="blackBg"></div>
+        <div class="modalWrap">
+          <div class="modalClose"><a href="#">close</a></div>
+          <div class="modalImage">
+            <img class="cloth" src="1.jpg" height="300" />
+          </div>
+          <div class="inform">
+            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
+            패딩을 걸쳐 완성한 캐주얼 룩
+          </div>
+          <div class="link">
+            <a
+              href="https://store.musinsa.com/app/styles/views/24525"
+              target="_blank"
+              >더 알아보기</a
+            >
+          </div>
+        </div>
+        <button type="button" id="modalBtn4">
+          <img src="1.jpg" height="500" />
+        </button>
+        <div class="blackBg"></div>
+        <div class="modalWrap">
+          <div class="modalClose"><a href="#">close</a></div>
+          <div class="modalImage">
+            <img class="cloth" src="1.jpg" height="300" />
+          </div>
+          <div class="inform">
+            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
+            패딩을 걸쳐 완성한 캐주얼 룩
+          </div>
+          <div class="link">
+            <a
+              href="https://store.musinsa.com/app/styles/views/24525"
+              target="_blank"
+              >더 알아보기</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
-  </body>
-  <script>
-    let temp_c = 20;
-    let condition = "sunny";
-    let gender = "W";
+    <script>
+      let temp_c = 20;
+      let condition = "sunny";
+      let gender = "W";
 
-    let fasionList = [];
-    let fasion = {
-      imgSrc : "",
-      page : "", // page to more info
-      comment : "",
-    }
+      let fasionList = [];
+      let fasion = {
+        imgSrc: "",
+        page: "", // page to more info
+        comment: "",
+      };
 
-    function getFashion()
-    {
-      //get checked value in radios
-      gender = document.querySelector("input[name='gender']:checked").value;
+      function getFashion() {
+        //get checked value in radios
+        gender = document.querySelector("input[name='gender']:checked").value;
 
-      //get temperature and condition from previous page.
-      tmp = location.href.split("?");
-      if(tmp.length > 1)
-      {
-        let data = tmp[1].split("/");
-        temp_c = Number(data[0]).toFixed();
-        condition = data[1];
+        //get temperature and condition from previous page.
+        tmp = location.href.split("?");
+        if (tmp.length > 1) {
+          let data = tmp[1].split("/");
+          temp_c = Number(data[0]).toFixed();
+          condition = data[1];
+        }
+
+        //Todo : iterate src directory with gender, temp_c, condition and get FasionList
+
+        //Todo : create img tags with Fasion.imgSrc and add listener setModalVisible()
+        //also, set img id to index, 1 to 4
+
+        //Todo : put img tag to fasionDiv with fasion.imgSrc
       }
 
-      //Todo : iterate src directory with gender, temp_c, condition and get FasionList
-
-      //Todo : create img tags with Fasion.imgSrc and add listener setModalVisible()
-      //also, set img id to index, 1 to 4
-
-      //Todo : put img tag to fasionDiv with fasion.imgSrc
-    }
-
-    //onclickListener for img tags in fasionDiv
-    function setModalVisible(id)
-    {
-      //Todo : get Fasion in FasionList with img id
-
-      //Todo : set modal img src, a href, inform to fasion's info
-
-      //Todo : set modal visible
-    }
-
-  </script>
+      //onclickListener for img tags in fasionDiv
+      function setModalVisible(id) {
+        //Todo : get Fasion in FasionList with img id
+        //Todo : set modal img src, a href, inform to fasion's info
+        //Todo : set modal visible
+      }
+    </script>
+  </body>
 </html>

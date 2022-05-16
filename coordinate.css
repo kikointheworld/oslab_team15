@@ -11,3 +11,136 @@
 * {
   font-family: "Open Sans", sans-serif;
 }
+
+.hidden {
+  display: none;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.title {
+  height: 200px;
+  background-color: var(--beige);
+  display: flex;
+  align-items: center;
+}
+
+.titleDiv {
+  margin-top: 40px;
+}
+
+.titleLine {
+  background-color: var(--purple);
+  margin-left: 50px;
+  height: 3px;
+  width: 200px;
+  margin-bottom: 5px;
+}
+
+.titleText {
+  color: var(--purple);
+  margin-bottom: 10px;
+  margin-left: 50px;
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.titleDesc {
+  color: var(--purple);
+  margin-bottom: 10px;
+  margin-left: 50px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.genderSelectButton {
+  font-size: 20px;
+  text-align: center;
+  color: var(--purple);
+  width: 90px;
+  height: 50px;
+  padding: 10px 25px;
+  border: 2px solid var(--purple);
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+}
+.genderSelectButton {
+  margin-left: 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.genderSelectButton:after {
+  position: absolute;
+  content: " ";
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  -webkit-transform: scale(0.1);
+  transform: scale(0.1);
+}
+.genderSelectButton:hover {
+  color: #fff;
+}
+.genderSelectButton:hover:after {
+  background: var(--purple);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.genderSelect {
+  display: table;
+  border-spacing: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.fashionDiv {
+  display: table;
+  border-spacing: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+.fashionImg {
+  width: 300px;
+  height: 500px;
+  margin: 20px;
+}
+
+.genderInput {
+  display: grid;
+  place-content: center;
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  color: var(--purple);
+}
+.genderInput[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--purple);
+}
+
+.genderInput[type="radio"]:checked::before {
+  transform: scale(1);
+}
