@@ -65,7 +65,7 @@ body {
 /* current중 currentWeather 부분 */
 .currentWeather {
   width: 300px;
-  height: 500px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,7 +83,7 @@ body {
 }
 
 .weather {
-  margin-top: 100px;
+  margin-top: 0px;
 }
 
 /* current중 particulate 부분 */
@@ -109,10 +109,23 @@ body {
   align-items: center;
   justify-content: center;
 }
+.hourlyText {
+  margin-left: 10px;
+  color: var(--purple);
+  font-size: 20px;
+}
+
 .hourly {
-  width: 660px;
-  height: 300px;
-  border: 1px solid black;
+  width: 1000px;
+  height: 200px;
+  border: 2px solid var(--purple);
+  border-radius: 5px;
+  overflow-x: auto;
+  /* white-space: nowrap; */
+  scrollbar-color: rebeccapurple;
+}
+td {
+  text-align: center;
 }
 
 .buttonDiv {

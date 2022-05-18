@@ -47,24 +47,25 @@
     <div class="weather">
       <div class="current">
         <div class="currentWeather">
-          <img
+          <!-- <img
             class="currentWeatherImage"
             style="font-size: 200px"
-          ></img>
+          ></img> -->
+          <i class="bi currentWeatherImage" style="font-size: 200px"></i>
           <p class="currentWeatherText">기온 : 도</p>
         </div>
         <div class="particulate">
-          <i
-            class="particulateImage"
-            style="font-size: 200px"
-          ></i>
+          <i class="particulateImage" style="font-size: 200px"></i>
           <p class="particulateText">미세먼지 :</p>
         </div>
       </div>
+
       <div class="hourlyDiv">
         <div class="hourly">
-          <table class="hourlyTable">
-          </table>
+          <div class="hourlyText">
+            <i class="bi bi-alarm-fill"></i> 시간별 일기예보
+          </div>
+          <table class="hourlyTable"></table>
         </div>
       </div>
     </div>
@@ -88,21 +89,21 @@
         "chance_of_rain",
       ];
       const particulateIndexDic = {
-        1:"좋음",
-        2:"보통",
-        3:"주의",
-        4:"나쁨",
-        5:"매우 나쁨",
-        6:"심각",
-      }
+        1: "좋음",
+        2: "보통",
+        3: "주의",
+        4: "나쁨",
+        5: "매우 나쁨",
+        6: "심각",
+      };
       const particulateEmojiDic = {
-        1:"bi bi-emoji-laughing-fill",
-        2:"bi bi-emoji-smile-fill",
-        3:"bi bi-emoji-neutral-fill",
-        4:"bi bi-emoji-frown-fill",
-        5:"bi bi-emoji-angry-fill",
-        6:"bi bi-emoji-dizzy-fill",
-      }
+        1: "bi bi-emoji-laughing-fill",
+        2: "bi bi-emoji-smile-fill",
+        3: "bi bi-emoji-neutral-fill",
+        4: "bi bi-emoji-frown-fill",
+        5: "bi bi-emoji-angry-fill",
+        6: "bi bi-emoji-dizzy-fill",
+      };
       //object with current weather info.
       let current = {};
       /* basic structure of current
@@ -186,14 +187,105 @@
             });
 
             // fill here with updating weather info
-            
-            document.querySelector(".currentWeatherImage").src = "https:" + current.condition.icon;
+
+            // 부트스트랩 아이콘으로 이미지 바꾸기
+            let weatherIconLegnth = String(current.condition.icon).length;
+            let numOfWeatherIcon = String(current.condition.icon).slice(
+              weatherIconLegnth - 7,
+              weatherIconLegnth - 4
+            );
+
+            // document.querySelector(".currentWeatherImage").src = "https:" + current.condition.icon;
+            // console.log("https:" + current.condition.icon)
+            // console.log(numOfWeatherIcon)
+            let weatherImg = document.querySelector(".currentWeatherImage");
+            // cloud + thunder
+            if (
+              numOfWeatherIcon === "395" ||
+              numOfWeatherIcon === "392" ||
+              numOfWeatherIcon === "389" ||
+              numOfWeatherIcon === "386" ||
+              numOfWeatherIcon === "200"
+            ) {
+              weatherImg.classList.add("bi-cloud-lightning-fill");
+            }
+            // snow
+            else if (
+              numOfWeatherIcon === "377" ||
+              numOfWeatherIcon === "374" ||
+              numOfWeatherIcon === "368" ||
+              numOfWeatherIcon === "365" ||
+              numOfWeatherIcon === "362" ||
+              numOfWeatherIcon === "317" ||
+              numOfWeatherIcon === "320" ||
+              numOfWeatherIcon === "323" ||
+              numOfWeatherIcon === "326" ||
+              numOfWeatherIcon === "227" ||
+              numOfWeatherIcon === "179"
+            ) {
+              weatherImg.classList.add("bi-cloud-snow-fill");
+              // rain (light)
+            } else if (
+              numOfWeatherIcon === "359" ||
+              numOfWeatherIcon === "356" ||
+              numOfWeatherIcon === "311" ||
+              numOfWeatherIcon === "296" ||
+              numOfWeatherIcon === "293" ||
+              numOfWeatherIcon === "182" ||
+              numOfWeatherIcon === "176"
+            ) {
+              weatherImg.classList.add("bi-cloud-rain-fill");
+              // rain (heavy)
+            } else if (
+              numOfWeatherIcon === "308" ||
+              numOfWeatherIcon === "305" ||
+              numOfWeatherIcon === "302" ||
+              numOfWeatherIcon === "299"
+            ) {
+              weatherImg.classList.add("bi-cloud-rain-heavy-fill");
+            }
+            // drizzle
+            else if (
+              numOfWeatherIcon === "284" ||
+              numOfWeatherIcon === "281" ||
+              numOfWeatherIcon === "266" ||
+              numOfWeatherIcon === "263" ||
+              numOfWeatherIcon === "185"
+            ) {
+              weatherImg.classList.add("bi-cloud-drizzle-fill");
+            }
+            // fog
+            else if (
+              numOfWeatherIcon === "248" ||
+              numOfWeatherIcon === "260" ||
+              numOfWeatherIcon === "230" ||
+              numOfWeatherIcon === "143"
+            ) {
+              weatherImg.classList.add("bi-cloud-fog-fill");
+            }
+            // just cloud
+            else if (
+              numOfWeatherIcon === "122" ||
+              numOfWeatherIcon === "119" ||
+              numOfWeatherIcon === "116"
+            ) {
+              weatherImg.classList.add("bi-cloud-fill");
+            } else {
+              if (String(current.condition.icon).includes("day")) {
+                weatherImg.classList.add("bi-brightness-high-fill");
+              } else {
+                weatherImg.classList.add("bi-moon-fill");
+              }
+            }
+
             document.querySelector(".currentWeatherText").textContent =
-              "기온 : " + current.temp_c;
-            document.querySelector(".particulateImage").className = 
-              particulateEmojiDic[current.air_quality["us-epa-index"]] + " particulateImage";
+              "기온 : " + current.temp_c + "°C";
+            document.querySelector(".particulateImage").className =
+              particulateEmojiDic[current.air_quality["us-epa-index"]] +
+              " particulateImage";
             document.querySelector(".particulateText").textContent =
-              "미세먼지 : " + particulateIndexDic[current.air_quality["us-epa-index"]];
+              "미세먼지 : " +
+              particulateIndexDic[current.air_quality["us-epa-index"]];
 
             getHourlyTable();
 
@@ -207,30 +299,30 @@
     </script>
 
     <script>
-      function getHourlyTable()
-      {
+      function getHourlyTable() {
         let hourlyTable = document.querySelector(".hourlyTable");
-        while(hourlyTable.rows.length != 0)
-          hourlyTable.deleteRow(0);
-        
+        while (hourlyTable.rows.length != 0) hourlyTable.deleteRow(0);
+
         let hourRow = hourlyTable.insertRow(); // hour
         let conditionRow = hourlyTable.insertRow(); // condition
         let temp_cRow = hourlyTable.insertRow(); // temp_c
         let corRow = hourlyTable.insertRow(); // chance of rain
 
-        hourlyList.forEach(hourly =>{
+        hourlyList.forEach((hourly) => {
           let hourCell = hourRow.insertCell();
           hourCell.innerText = hourly.time.split(" ")[1];
 
           let conditionCell = conditionRow.insertCell();
           let conditionIconUrl = "https:" + hourly.condition.icon;
-          conditionCell.innerHTML = `<img class="hourlyWeatherImage" src="${"https:" + hourly.condition.icon}">`;
+          conditionCell.innerHTML = `<img class="hourlyWeatherImage" src="${
+            "https:" + hourly.condition.icon
+          }">`;
 
           let temp_cCell = temp_cRow.insertCell();
-          temp_cCell.innerText = hourly.temp_c;
+          temp_cCell.innerText = hourly.temp_c + "°C";
 
-          let corCell = corRow.insertCell();
-          corCell.innerText = hourly.chance_of_rain + "%";
+          // let corCell = corRow.insertCell();
+          // corCell.innerText = hourly.chance_of_rain + "%";
         });
       }
     </script>
