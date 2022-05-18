@@ -47,15 +47,15 @@
     <div class="weather">
       <div class="current">
         <div class="currentWeather">
-          <i
-            class="bi bi-cloud-fill currentWeatherImage"
+          <img
+            class="currentWeatherImage"
             style="font-size: 200px"
-          ></i>
+          ></img>
           <p class="currentWeatherText">기온 : 도</p>
         </div>
         <div class="particulate">
           <i
-            class="bi bi-emoji-smile particulateImage"
+            class="particulateImage"
             style="font-size: 200px"
           ></i>
           <p class="particulateText">미세먼지 :</p>
@@ -63,8 +63,8 @@
       </div>
       <div class="hourlyDiv">
         <div class="hourly">
-          시간별 기온 나오는 곳
-          <table></table>
+          <table class="hourlyTable">
+          </table>
         </div>
       </div>
     </div>
@@ -87,7 +87,22 @@
         "condition",
         "chance_of_rain",
       ];
-
+      const particulateIndexDic = {
+        1:"좋음",
+        2:"보통",
+        3:"주의",
+        4:"나쁨",
+        5:"매우 나쁨",
+        6:"심각",
+      }
+      const particulateEmojiDic = {
+        1:"bi bi-emoji-laughing-fill",
+        2:"bi bi-emoji-smile-fill",
+        3:"bi bi-emoji-neutral-fill",
+        4:"bi bi-emoji-frown-fill",
+        5:"bi bi-emoji-angry-fill",
+        6:"bi bi-emoji-dizzy-fill",
+      }
       //object with current weather info.
       let current = {};
       /* basic structure of current
@@ -171,12 +186,16 @@
             });
 
             // fill here with updating weather info
-            //document.querySelector(".currentWeatherImage")
+            
+            document.querySelector(".currentWeatherImage").src = "https:" + current.condition.icon;
             document.querySelector(".currentWeatherText").textContent =
               "기온 : " + current.temp_c;
-            //document.querySelector(".particulateImage")
+            document.querySelector(".particulateImage").className = 
+              particulateEmojiDic[current.air_quality["us-epa-index"]] + " particulateImage";
             document.querySelector(".particulateText").textContent =
-              "미세먼지 : " + current.air_quality["us-epa-index"];
+              "미세먼지 : " + particulateIndexDic[current.air_quality["us-epa-index"]];
+
+            getHourlyTable();
 
             document.querySelector(".coordinateButton").onclick = () =>
               (location.href = `./coordinate.html?${current.temp_c}/${current.condition.text}`);
@@ -186,6 +205,36 @@
           });
       }
     </script>
+
+    <script>
+      function getHourlyTable()
+      {
+        let hourlyTable = document.querySelector(".hourlyTable");
+        while(hourlyTable.rows.length != 0)
+          hourlyTable.deleteRow(0);
+        
+        let hourRow = hourlyTable.insertRow(); // hour
+        let conditionRow = hourlyTable.insertRow(); // condition
+        let temp_cRow = hourlyTable.insertRow(); // temp_c
+        let corRow = hourlyTable.insertRow(); // chance of rain
+
+        hourlyList.forEach(hourly =>{
+          let hourCell = hourRow.insertCell();
+          hourCell.innerText = hourly.time.split(" ")[1];
+
+          let conditionCell = conditionRow.insertCell();
+          let conditionIconUrl = "https:" + hourly.condition.icon;
+          conditionCell.innerHTML = `<img class="hourlyWeatherImage" src="${"https:" + hourly.condition.icon}">`;
+
+          let temp_cCell = temp_cRow.insertCell();
+          temp_cCell.innerText = hourly.temp_c;
+
+          let corCell = corRow.insertCell();
+          corCell.innerText = hourly.chance_of_rain + "%";
+        });
+      }
+    </script>
+
     <script>
       //simply taking info we need from raw data.
       function getCurrent(currentRaw) {
