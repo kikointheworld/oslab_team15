@@ -187,7 +187,7 @@
             });
 
             // fill here with updating weather info
-
+            let conditionText = "";
             // 부트스트랩 아이콘으로 이미지 바꾸기
             let weatherIconLegnth = String(current.condition.icon).length;
             let numOfWeatherIcon = String(current.condition.icon).slice(
@@ -208,6 +208,7 @@
               numOfWeatherIcon === "200"
             ) {
               weatherImg.classList.add("bi-cloud-lightning-fill");
+              conditionText = "Cloudy";
             }
             // snow
             else if (
@@ -224,6 +225,7 @@
               numOfWeatherIcon === "179"
             ) {
               weatherImg.classList.add("bi-cloud-snow-fill");
+              conditionText = "Rainy";
               // rain (light)
             } else if (
               numOfWeatherIcon === "359" ||
@@ -235,6 +237,7 @@
               numOfWeatherIcon === "176"
             ) {
               weatherImg.classList.add("bi-cloud-rain-fill");
+              conditionText = "Rainy";
               // rain (heavy)
             } else if (
               numOfWeatherIcon === "308" ||
@@ -243,6 +246,7 @@
               numOfWeatherIcon === "299"
             ) {
               weatherImg.classList.add("bi-cloud-rain-heavy-fill");
+              conditionText = "Rainy";
             }
             // drizzle
             else if (
@@ -253,6 +257,7 @@
               numOfWeatherIcon === "185"
             ) {
               weatherImg.classList.add("bi-cloud-drizzle-fill");
+              conditionText = "Cloudy";
             }
             // fog
             else if (
@@ -262,6 +267,7 @@
               numOfWeatherIcon === "143"
             ) {
               weatherImg.classList.add("bi-cloud-fog-fill");
+              conditionText = "Cloudy";
             }
             // just cloud
             else if (
@@ -270,11 +276,14 @@
               numOfWeatherIcon === "116"
             ) {
               weatherImg.classList.add("bi-cloud-fill");
+              conditionText = "Cloudy";
             } else {
               if (String(current.condition.icon).includes("day")) {
                 weatherImg.classList.add("bi-brightness-high-fill");
+                conditionText = "Sunny";
               } else {
                 weatherImg.classList.add("bi-moon-fill");
+                conditionText = "Sunny";
               }
             }
 
@@ -290,7 +299,7 @@
             getHourlyTable();
 
             document.querySelector(".coordinateButton").onclick = () =>
-              (location.href = `./coordinate.html?${current.temp_c}/${current.condition.text}`);
+              (location.href = `./coordinate.html?${current.temp_c}/${conditionText}`);
           })
           .catch((error) => {
             console.error(error);
@@ -301,7 +310,7 @@
     <script>
       function getHourlyTable() {
         let hourlyTable = document.querySelector(".hourlyTable");
-        while (hourlyTable.rows.length != 0) hourlyTable.deleteRow(0);
+        while (hourlyTable.rows.length != 0) hourlyTable.deleteRow();
 
         let hourRow = hourlyTable.insertRow(); // hour
         let conditionRow = hourlyTable.insertRow(); // condition
