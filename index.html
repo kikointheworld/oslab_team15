@@ -105,7 +105,7 @@
         6: "bi bi-emoji-dizzy-fill",
       };
       //object with current weather info.
-      let current = {};
+
       /* basic structure of current
     current = {
         temp_c : int, temperature in celsius
@@ -128,7 +128,7 @@
 */
       //list that contains hourly.
       //it contains 48 hourly, from today's 00:00 to tomorrow 23:00 by hour
-      let hourlyList = [];
+
       /*  basic structure of hourly.
     hourly = {
         time : string, "yyyy-mm-dd hh:00"
@@ -176,13 +176,15 @@
         axios
           .get(url)
           .then((res) => {
+            let current = {};
+            let hourlyList = [];
             let currentRaw = res.data.current;
             let forecastdays = res.data.forecast.forecastday;
 
-            getCurrent(currentRaw);
+            getCurrent(current, currentRaw);
             forecastdays.forEach((forecastday) => {
               forecastday.hour.forEach((hourlyRaw) => {
-                getHourly(hourlyRaw);
+                getHourly(hourlyList, hourlyRaw);
               });
             });
 
@@ -296,7 +298,7 @@
               "미세먼지 : " +
               particulateIndexDic[current.air_quality["us-epa-index"]];
 
-            getHourlyTable();
+            getHourlyTable(hourlyList);
 
             document.querySelector(".coordinateButton").onclick = () =>
               (location.href = `./coordinate.html?${current.temp_c}/${conditionText}`);
@@ -308,9 +310,10 @@
     </script>
 
     <script>
-      function getHourlyTable() {
+      function getHourlyTable(hourlyList) {
         let hourlyTable = document.querySelector(".hourlyTable");
-        while (hourlyTable.rows.length != 0) hourlyTable.deleteRow();
+        
+        while (hourlyTable.rows.length != 0) hourlyTable.deleteRow(-1);
 
         let hourRow = hourlyTable.insertRow(); // hour
         let conditionRow = hourlyTable.insertRow(); // condition
@@ -338,14 +341,14 @@
 
     <script>
       //simply taking info we need from raw data.
-      function getCurrent(currentRaw) {
+      function getCurrent(current, currentRaw) {
         currentKeys.forEach((key) => {
           if (typeof currentRaw[key] == "object")
             current[key] = Object.assign(currentRaw[key]);
           else current[key] = currentRaw[key];
         });
       }
-      function getHourly(hourlyRaw) {
+      function getHourly(hourlyList, hourlyRaw) {
         let hourlyTmp = {};
         hourlyKeys.forEach((key) => {
           if (typeof hourlyRaw[key] == "object")
