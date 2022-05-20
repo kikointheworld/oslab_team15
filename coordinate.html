@@ -69,47 +69,45 @@
         />
         여
       </label>
-      <button class="genderSelectButton" onclick="getFasion()">확인</button>
+      <button class="genderSelectButton" onclick="getFashion()">확인</button>
     </div>
-    <div class="fashionDiv">
+    <div class="fashionDiv" >
       <div class="fassionRow">
         <button type="button" id="modalBtn1">
-          <img src="1.jpg" height="500" />
+          <img class="img1" src="" height="500" />
         </button>
         <div class="blackBg"></div>
-        <div class="modalWrap">
-          <div class="modalClose"><a href="#">close</a></div>
+        <div class="modalWrap" id="modal1">
+          <div class="modalClose" id="close1"><img src="https://img.icons8.com/metro/26/000000/close-window.png"></div>
           <div class="modalImage">
-            <img class="cloth" src="1.jpg" height="300" />
+            <img class="cloth1" src="1.jpg" height="300" />
           </div>
-          <div class="inform">
-            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
-            패딩을 걸쳐 완성한 캐주얼 룩
+          <div class="inform" id="comment1">
           </div>
           <div class="link">
             <a
-              href="https://store.musinsa.com/app/styles/views/24525"
+              id="link1";
+              href=""
               target="_blank"
               >더 알아보기</a
             >
           </div>
         </div>
         <button type="button" id="modalBtn2">
-          <img src="1.jpg" height="500" />
+          <img class="img2" src="" height="500" />
         </button>
         <div class="blackBg"></div>
-        <div class="modalWrap">
-          <div class="modalClose"><a href="#">close</a></div>
+        <div class="modalWrap" id="modal2">
+          <div class="modalClose" id="close2"><img src="https://img.icons8.com/metro/26/000000/close-window.png"></div>
           <div class="modalImage">
-            <img class="cloth" src="1.jpg" height="300" />
+            <img class="cloth2" src="1.jpg" height="300" />
           </div>
-          <div class="inform">
-            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
-            패딩을 걸쳐 완성한 캐주얼 룩
+          <div class="inform" id="comment2">
           </div>
           <div class="link">
             <a
-              href="https://store.musinsa.com/app/styles/views/24525"
+              id="link2";
+              href=""
               target="_blank"
               >더 알아보기</a
             >
@@ -118,42 +116,40 @@
       </div>
       <div class="fassionRow">
         <button type="button" id="modalBtn3">
-          <img src="1.jpg" height="500" />
+          <img class="img3" src="" height="500" />
         </button>
         <div class="blackBg"></div>
-        <div class="modalWrap">
-          <div class="modalClose"><a href="#">close</a></div>
+        <div class="modalWrap" id="modal3">
+          <div class="modalClose" id="close3"><img src="https://img.icons8.com/metro/26/000000/close-window.png"></div>
           <div class="modalImage">
-            <img class="cloth" src="1.jpg" height="300" />
+            <img class="cloth3" src="1.jpg" height="300" />
           </div>
-          <div class="inform">
-            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
-            패딩을 걸쳐 완성한 캐주얼 룩
+          <div class="inform" id="comment3">
           </div>
           <div class="link">
             <a
-              href="https://store.musinsa.com/app/styles/views/24525"
+              id="link3";
+              href=""
               target="_blank"
               >더 알아보기</a
             >
           </div>
         </div>
         <button type="button" id="modalBtn4">
-          <img src="1.jpg" height="500" />
+          <img class="img4" src="" height="500" />
         </button>
         <div class="blackBg"></div>
-        <div class="modalWrap">
-          <div class="modalClose"><a href="#">close</a></div>
+        <div class="modalWrap" id="modal4">
+          <div class="modalClose" id="close4"><img src="https://img.icons8.com/metro/26/000000/close-window.png" ></div>
           <div class="modalImage">
-            <img class="cloth" src="1.jpg" height="300" />
+            <img class="cloth4" src="1.jpg" height="300" />
           </div>
-          <div class="inform">
-            레터링 디테일이 돋보이는 후드 티셔츠와 데님 팬츠를 코디하고 숏
-            패딩을 걸쳐 완성한 캐주얼 룩
+          <div class="inform" id="comment4">
           </div>
           <div class="link">
             <a
-              href="https://store.musinsa.com/app/styles/views/24525"
+              id="link4";
+              href=""
               target="_blank"
               >더 알아보기</a
             >
@@ -173,32 +169,79 @@
         comment: "",
       };
 
+      
+
       function getFashion() {
+
+        //show image
+        document.querySelector(".fashionDiv").style.visibility = "visible";
+
         //get checked value in radios
+        let path = "src/";
         gender = document.querySelector("input[name='gender']:checked").value;
 
         //get temperature and condition from previous page.
         tmp = location.href.split("?");
         if (tmp.length > 1) {
           let data = tmp[1].split("/");
-          temp_c = Number(data[0]).toFixed();
+          temp_c = Number(data[0]).toFixed(1);
           condition = data[1];
+          condition = condition.toLowerCase();
         }
 
         //Todo : iterate src directory with gender, temp_c, condition and get FasionList
+        if(gender === "M") path += "M/";
+        else if(gender === "W") path += "W/";
+
+        if(temp_c < 4) path += "04/";
+        else if(temp_c < 9) path += "05/";
+        else if(temp_c < 12) path += "09/";
+        else if(temp_c < 17) path += "12/";
+        else if(temp_c < 20) path += "17/";
+        else if(temp_c < 23) path += "20/";
+        else if(temp_c < 28) path += "23/";
+        else "28/"; 
+        
+        path += condition;
 
         //Todo : create img tags with Fasion.imgSrc and add listener setModalVisible()
-        //also, set img id to index, 1 to 4
-
+        //also, set img class to index, 1 to 4
         //Todo : put img tag to fasionDiv with fasion.imgSrc
-      }
+        for(let i = 1; i < 5; i++) {
+          let imgClass = ".img" + i;
+          let modalClass = ".cloth" + i;
+          let image = document.querySelector(imgClass);
+          let modal = document.querySelector(modalClass);
+          if(gender === "M") fasion.imgSrc = path + "/" + i + ".jpg";
+          else if(gender === "W") fasion.imgSrc = path + "/" + i + ".jpeg";          
+          image.src = fasion.imgSrc;
+          modal.src = fasion.imgSrc;
+        }
 
+        //Setting by getting information and src from .txt
+        for(let i=1; i < 5; i++) {
+          let content = null;
+          let xmlhttp = new XMLHttpRequest();
+          xmlhttp.open("GET", path + "/"+ i +".txt", false);
+          xmlhttp.send();
+          if (xmlhttp.status == 200) { 
+            content = xmlhttp.responseText;
+          }
+          content = content.split(/\r\n|\n/);
+          fasion.page = content[0];
+          fasion.comment = content[1];
+          document.getElementById("comment"+i).innerText = fasion.comment;
+          document.getElementById("link"+i).href = fasion.page;
+        }
+      }
+      /*
       //onclickListener for img tags in fasionDiv
       function setModalVisible(id) {
         //Todo : get Fasion in FasionList with img id
         //Todo : set modal img src, a href, inform to fasion's info
         //Todo : set modal visible
-      }
+      }*/
+
     </script>
   </body>
 </html>

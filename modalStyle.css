@@ -1,8 +1,12 @@
+.fashionDiv{
+    visibility: hidden;
+}
+
 .modalWrap{
     display: none;
     width: 500px;
     height: 500px;
-    position: absolute;
+    position: fixed;
     top:50%;
     left: 50%;
     margin: -250px 0 0 -250px;
@@ -13,7 +17,7 @@
 
 .blackBg{
     display: none;
-    position: absolute;
+    position: fixed;
     content: "";
     width: 100%;
     height: 100%;
@@ -31,11 +35,10 @@
     right: 0;
 }
 
-.modalClose> a{
+.modalClose> img{
     display: block;
     width: 100%;
     height: 100%;
-    background:url(https://img.icons8.com/metro/26/000000/close-window.png);
     text-indent: -9999px;
 }
 
