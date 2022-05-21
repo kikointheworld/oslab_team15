@@ -221,17 +221,17 @@
         //Setting by getting information and src from .txt
         for(let i=1; i < 5; i++) {
           let content = null;
-          let xmlhttp = new XMLHttpRequest();
-          xmlhttp.open("GET", path + "/"+ i +".txt", false);
-          xmlhttp.send();
-          if (xmlhttp.status == 200) { 
-            content = xmlhttp.responseText;
-          }
-          content = content.split(/\r\n|\n/);
-          fasion.page = content[0];
-          fasion.comment = content[1];
-          document.getElementById("comment"+i).innerText = fasion.comment;
-          document.getElementById("link"+i).href = fasion.page;
+          let src = path +"/"+ i + ".txt";
+          fetch(src)
+            .then((response) => response.text())
+            .then(function(text){
+              let content = text;
+              content = content.split(/\r\n|\n/);
+              fasion.page = content[0];
+              fasion.comment = content[1];
+              document.getElementById("comment"+i).innerText = fasion.comment;
+              document.getElementById("link"+i).href = fasion.page;
+            }); 
         }
       }
       /*
