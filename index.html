@@ -16,7 +16,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
     />
-    <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./index.css" />
 
     <!-- 폰트 -->
@@ -37,7 +36,7 @@
     <div class="title">
       <div class="titleDiv">
         <div class="titleLine"></div>
-        <p class="titleText">What to wear? 오늘 뭐 입지?</p>
+        <p class="titleText">오늘 뭐 입지?</p>
         <p class="titleDesc">
           Recommended service for fashion coordination according to temperature
         </p>
@@ -47,10 +46,6 @@
     <div class="weather">
       <div class="current">
         <div class="currentWeather">
-          <!-- <img
-            class="currentWeatherImage"
-            style="font-size: 200px"
-          ></img> -->
           <i class="bi currentWeatherImage" style="font-size: 200px"></i>
           <p class="currentWeatherText">기온 : 도</p>
         </div>
@@ -104,45 +99,7 @@
         5: "bi bi-emoji-angry-fill",
         6: "bi bi-emoji-dizzy-fill",
       };
-      //object with current weather info.
 
-      /* basic structure of current
-    current = {
-        temp_c : int, temperature in celsius
-        feelslike_c : int, temperature we feels like in celsius
-        condition : {
-            text : string, 'Sunny', 'Fog' etc
-            icon : string, url of icon
-            code :
-        }
-        air_quality : {
-            us-epa-index : integer,
-                            1 means Good
-                            2 means Moderate
-                            3 means Unhealthy for sensitive group
-                            4 means Unhealthy
-                            5 means Very Unhealthy
-                            6 means Hazardous
-        }
-    }
-*/
-      //list that contains hourly.
-      //it contains 48 hourly, from today's 00:00 to tomorrow 23:00 by hour
-
-      /*  basic structure of hourly.
-    hourly = {
-        time : string, "yyyy-mm-dd hh:00"
-        temp_c : int, temperature in celsius
-        feelslike_c : int, temperature we feels like in celsius
-        condition : {
-            text : string, 'Sunny', 'Fog' etc
-            icon : string, url of icon
-            code : 
-        }
-        chance_of_rain : float, 0 ~ 1
-    }
-*/
-      //add callback function which is called when location is changed.
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
           (pos) => {
@@ -153,11 +110,8 @@
             getWeatherInfo("Seoul");
           }
         );
-      }
-      // get weather of seoul when location is not detected.
-      else getWeatherInfo("Seoul");
+      } else getWeatherInfo("Seoul");
 
-      //update current and hourlyList with weather api
       function getWeatherInfo(q) {
         let url = "http://api.weatherapi.com/v1";
         const type = "forecast";
@@ -188,18 +142,13 @@
               });
             });
 
-            // fill here with updating weather info
             let conditionText = "";
-            // 부트스트랩 아이콘으로 이미지 바꾸기
             let weatherIconLegnth = String(current.condition.icon).length;
             let numOfWeatherIcon = String(current.condition.icon).slice(
               weatherIconLegnth - 7,
               weatherIconLegnth - 4
             );
 
-            // document.querySelector(".currentWeatherImage").src = "https:" + current.condition.icon;
-            // console.log("https:" + current.condition.icon)
-            // console.log(numOfWeatherIcon)
             let weatherImg = document.querySelector(".currentWeatherImage");
             // cloud + thunder
             if (
@@ -312,7 +261,7 @@
     <script>
       function getHourlyTable(hourlyList) {
         let hourlyTable = document.querySelector(".hourlyTable");
-        
+
         while (hourlyTable.rows.length != 0) hourlyTable.deleteRow(-1);
 
         let hourRow = hourlyTable.insertRow(); // hour
@@ -332,15 +281,11 @@
 
           let temp_cCell = temp_cRow.insertCell();
           temp_cCell.innerText = hourly.temp_c + "°C";
-
-          // let corCell = corRow.insertCell();
-          // corCell.innerText = hourly.chance_of_rain + "%";
         });
       }
     </script>
 
     <script>
-      //simply taking info we need from raw data.
       function getCurrent(current, currentRaw) {
         currentKeys.forEach((key) => {
           if (typeof currentRaw[key] == "object")
