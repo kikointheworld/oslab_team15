@@ -99,6 +99,7 @@
         5: "bi bi-emoji-angry-fill",
         6: "bi bi-emoji-dizzy-fill",
       };
+      const numOfHourlyWeather = 24;
 
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
@@ -130,12 +131,16 @@
         axios
           .get(url)
           .then((res) => {
+            let currentHour = 0;
             let current = {};
             let hourlyList = [];
             let currentRaw = res.data.current;
             let forecastdays = res.data.forecast.forecastday;
 
+            currentHour = Number(res.data.location.localtime.split(" ")[1].split(":")[0]);
+            
             getCurrent(current, currentRaw);
+
             forecastdays.forEach((forecastday) => {
               forecastday.hour.forEach((hourlyRaw) => {
                 getHourly(hourlyList, hourlyRaw);
@@ -247,7 +252,7 @@
               "미세먼지 : " +
               particulateIndexDic[current.air_quality["us-epa-index"]];
 
-            getHourlyTable(hourlyList);
+            getHourlyTable(hourlyList, currentHour, numOfHourlyWeather);
 
             document.querySelector(".coordinateButton").onclick = () =>
               (location.href = `./coordinate.html?${current.temp_c}/${conditionText}`);
@@ -259,7 +264,7 @@
     </script>
 
     <script>
-      function getHourlyTable(hourlyList) {
+      function getHourlyTable(hourlyList, currentHour, numOfHourlyWeather) {
         let hourlyTable = document.querySelector(".hourlyTable");
 
         while (hourlyTable.rows.length != 0) hourlyTable.deleteRow(-1);
@@ -269,7 +274,10 @@
         let temp_cRow = hourlyTable.insertRow(); // temp_c
         let corRow = hourlyTable.insertRow(); // chance of rain
 
-        hourlyList.forEach((hourly) => {
+        let n = 0;
+        hourlyList.forEach((hourly, i) => {
+          if(i <= currentHour || n >= numOfHourlyWeather) return;
+
           let hourCell = hourRow.insertCell();
           hourCell.innerText = hourly.time.split(" ")[1];
 
@@ -281,6 +289,8 @@
 
           let temp_cCell = temp_cRow.insertCell();
           temp_cCell.innerText = hourly.temp_c + "°C";
+
+          ++n;
         });
       }
     </script>
