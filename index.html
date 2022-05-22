@@ -4,6 +4,15 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://canvas.skku.edu/accounts/1/files/6/download?verifier=IFheuemxTnuTXf7L4j840s7DfJY0b64qdOLMaeFS"
+    />
 
     <!-- Bootstrap CSS -->
     <link
@@ -28,7 +37,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <title>Weather Coordinator</title>
+    <title>오늘 뭐입지?</title>
   </head>
 
   <body>
@@ -137,8 +146,10 @@
             let currentRaw = res.data.current;
             let forecastdays = res.data.forecast.forecastday;
 
-            currentHour = Number(res.data.location.localtime.split(" ")[1].split(":")[0]);
-            
+            currentHour = Number(
+              res.data.location.localtime.split(" ")[1].split(":")[0]
+            );
+
             getCurrent(current, currentRaw);
 
             forecastdays.forEach((forecastday) => {
@@ -276,7 +287,7 @@
 
         let n = 0;
         hourlyList.forEach((hourly, i) => {
-          if(i <= currentHour || n >= numOfHourlyWeather) return;
+          if (i <= currentHour || n >= numOfHourlyWeather) return;
 
           let hourCell = hourRow.insertCell();
           hourCell.innerText = hourly.time.split(" ")[1];
